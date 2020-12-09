@@ -48,10 +48,18 @@ defmodule Issues.CLI do
     def process({user, project, _count}) do
         Issues.GithubIssues.fetch(user, project)
         |> decode_response()
+        |> sort_descending()
     end
 
     def decode_response({:ok, body}) do
         body
+    end
+
+    def sort_descending(issue_list) do
+        issue_list 
+        |> Enum.sort(fn a, b ->
+            a["created_at"] >= b["created_at"]
+        end)
     end
 
     def decode_response({:error, error}) do 

@@ -27,6 +27,7 @@ defmodule Issues.TableFormatter do
     to_string(str)
   end
 
+  @spec widths_of([String.t()]) :: [integer()]
   def widths_of(columns) do
     for column <- columns do
       column |> map(&String.length/1) |> max

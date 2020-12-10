@@ -45,10 +45,12 @@ defmodule Issues.CLI do
         System.halt(0)
     end
 
-    def process({user, project, _count}) do
+    def process({user, project, count}) do
         Issues.GithubIssues.fetch(user, project)
         |> decode_response()
         |> sort_descending()
+        |> select_last(count)
+        |> print_columns(["number", "created_at", "title"])
     end
 
     def decode_response({:ok, body}) do
@@ -67,6 +69,16 @@ defmodule Issues.CLI do
         System.halt(2)
     end
     
+    def select_last(list, count) do
+        list 
+        |> Enum.take(count)
+        |> Enum.reverse
+    end
+
+
+
+
+
     @doc """
     This is an old implementation. Kept for syntax reference.
     """

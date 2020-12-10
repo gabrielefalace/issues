@@ -1,5 +1,6 @@
 defmodule Issues.CLI do
-    
+    import Issues.TableFormatter, only: [print_columns: 2]
+
     @default_count 4
 
     @moduledoc """
@@ -57,16 +58,16 @@ defmodule Issues.CLI do
         body
     end
 
+    def decode_response({:error, error}) do 
+        IO.puts "Error fetching from Github: #{error["message"]}"
+        System.halt(2)
+    end
+    
     def sort_descending(issue_list) do
         issue_list 
         |> Enum.sort(fn a, b ->
             a["created_at"] >= b["created_at"]
         end)
-    end
-
-    def decode_response({:error, error}) do 
-        IO.puts "Error fetching from Github: #{error["message"]}"
-        System.halt(2)
     end
     
     def select_last(list, count) do

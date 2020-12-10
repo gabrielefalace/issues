@@ -23,8 +23,7 @@ defmodule Issues.GithubIssues do
     :ok
   end
 
-  defp check_for_error(_) do 
+  defp check_for_error(_) do
     :error
   end
-
 end

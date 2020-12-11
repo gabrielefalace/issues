@@ -4,11 +4,14 @@ defmodule Issues.MixProject do
   def project do
     [
       app: :issues,
+      escript: escript_config(),
       version: "0.1.0",
       elixir: "~> 1.11",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
-      test_paths: ["test"]
+      test_paths: ["test"],
+      name: "Issues",
+      source_url: "https://github.com/gabrielefalace/issues"
     ]
   end
 
@@ -23,7 +26,15 @@ defmodule Issues.MixProject do
   defp deps do
     [
       {:httpoison, "~> 1.0.0"},
-      {:poison, "~> 3.1"}
+      {:poison, "~> 3.1"},
+      {:ex_doc, "~> 0.19"},
+      {:earmark, "~> 1.4.13"}
+    ]
+  end
+
+  defp escript_config do
+    [
+      main_module: Issues.CLI
     ]
   end
 end
